@@ -1,0 +1,121 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { items } from '../../data/items';
+
+const { id } = Astro.params;
+const item = items.find(item => item.id === parseInt(id));
+
+if (!item) return Astro.redirect('/');
+---
+
+<Layout title={item.title}>
+    <div class="container">
+        <a href="/" class="back-link">&larr; Back</a>
+        
+        <div class="detail-card">
+            <div class="detail-layout">
+                <div class="image-container">
+                    <img 
+                        src={`/images/${item.image}`}
+                        alt={item.title}
+                        transition:name={`image-${item.id}`}
+                        loading="eager"
+                        width={item.width}
+                        height={item.height}
+                    />
+                </div>
+                <div class="content">
+                    <h1 transition:name={`title-${item.id}`}>
+                        {item.title}
+                    </h1>
+                    <p class="description" transition:name={`desc-${item.id}`}>
+                        {item.description}
+                    </p>
+                    <div class="additional-content">
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        </p>
+                        <p>
+                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</Layout>
+
+<style>
+    .back-link {
+        display: inline-block;
+        color: var(--accent-color);
+        margin-bottom: 2rem;
+    }
+
+    .back-link:hover {
+        text-decoration: underline;
+    }
+
+    .detail-card {
+        background: var(--card-bg);
+        border-radius: 0.5rem;
+        overflow: hidden;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+    .detail-layout {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .image-container {
+        width: 100%;
+    }
+
+    .image-container img {
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+    }
+
+    .content {
+        padding: 2rem;
+    }
+
+    h1 {
+        font-size: 2rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+
+    .description {
+        color: var(--text-secondary);
+        font-size: 1.25rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .additional-content p {
+        color: var(--text-secondary);
+        margin-bottom: 1rem;
+    }
+
+    @media (min-width: 768px) {
+        .detail-layout {
+            flex-direction: row;
+        }
+
+        .image-container {
+            width: 33.333%;
+            flex-shrink: 0;
+        }
+
+        .image-container img {
+            height: 400px;
+        }
+
+        .content {
+            width: 66.666%;
+        }
+    }
+</style> 
