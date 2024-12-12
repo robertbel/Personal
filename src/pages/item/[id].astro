@@ -2,6 +2,12 @@
 import Layout from '../../layouts/Layout.astro';
 import { items } from '../../data/items';
 
+export function getStaticPaths() {
+    return items.map(item => ({
+        params: { id: item.id.toString() }
+    }));
+}
+
 const { id } = Astro.params;
 const item = items.find(item => item.id === parseInt(id));
 
