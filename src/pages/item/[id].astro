@@ -28,18 +28,20 @@ if (!item) return Astro.redirect('/');
           class={styles.image}
         />
       </div>
-      <div class={styles.content}>
-        <h1 transition:name={`title-${item.id}`}>{item.title}</h1>
-        <p class="description" transition:name={`desc-${item.id}`}>
-          {item.description}
-        </p>
-        <div class="additional-content">
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+      <div class={styles.contentWrapper}>
+        <div class={styles.content}>
+          <h1 transition:name={`title-${item.id}`}>{item.title}</h1>
+          <p class="description" transition:name={`desc-${item.id}`}>
+            {item.description}
           </p>
-          <p>
-            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-          </p>
+          <div class="additional-content">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+            <p>
+              Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -48,13 +50,13 @@ if (!item) return Astro.redirect('/');
 
 <style>
   .description {
-    color: var(--text-secondary);
+    color: #ccc;
     font-size: 1.25rem;
     margin-bottom: 1.5rem;
   }
 
   .additional-content p {
-    color: var(--text-secondary);
+    color: #aaa;
     margin-bottom: 1rem;
   }
 </style> 
