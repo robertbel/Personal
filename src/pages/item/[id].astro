@@ -29,7 +29,7 @@ if (!item) return Astro.redirect('/');
         />
       </div>
       <div class={styles.contentWrapper}>
-        <div class={styles.content}>
+        <div class={styles.content} transition:name={`card-${item.id}`}>
           <h1 transition:name={`title-${item.id}`}>{item.title}</h1>
           <p class="description" transition:name={`desc-${item.id}`}>
             {item.description}

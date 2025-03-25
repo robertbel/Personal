@@ -21,7 +21,7 @@ const { id, title, description, image, width, height } = Astro.props;
             width={width}
             height={height}
         />
-        <div class="card-content">
+        <div class="card-content" transition:name={`card-${id}`}>
             <h2 transition:name={`title-${id}`}>{title}</h2>
             <p transition:name={`desc-${id}`}>{description}</p>
         </div>
@@ -30,36 +30,26 @@ const { id, title, description, image, width, height } = Astro.props;
 
 <style>
     .card {
-        display: block;
-        transition: transform 0.3s ease;
+        border-radius: 0.5rem;
+        overflow: hidden;
     }
-
-    .card:hover {
-        transform: scale(1.05);
-    }
-
     .card-inner {
         background: var(--card-bg);
         border-radius: 0.5rem;
-        overflow: hidden;
-        height: 100%;
     }
 
     img {
-        width: 100%;
-        height: 400px;
+        height: 200px;
         object-fit: cover;
     }
 
     .card-content {
         padding: 1rem;
-        background-color: #222;
     }
 
     h2 {
         font-size: 1.25rem;
         font-weight: bold;
-        margin-bottom: 0.5rem;
     }
 
     p {
