@@ -44,6 +44,17 @@
   padding-bottom: 2rem;
 }
 
+@media (max-width: 768px) {
+  .container {
+    grid-template-rows: calc(40vh - 4rem) auto;
+  }
+  .contentWrapper {
+    grid-row: revert;
+    grid-column: revert;
+    padding: 0;
+  }
+}
+
 .content {
   position: relative;
   width: 100%;
