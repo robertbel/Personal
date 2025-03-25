@@ -1,28 +1,32 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { items } from '../../data/items';
+import { getCollection, type CollectionEntry } from 'astro:content';
 import styles from '../../styles/detail.module.css';
 
-export function getStaticPaths() {
+export async function getStaticPaths() {
+    const items = await getCollection('items');
     return items.map(item => ({
-        params: { id: item.id.toString() }
+        params: { id: item.id },
+        props: { item },
     }));
 }
 
-const { id } = Astro.params;
-const item = items.find(item => item.id === parseInt(id));
+interface Props {
+    item: CollectionEntry<'items'>;
+}
 
-if (!item) return Astro.redirect('/');
+const { item } = Astro.props;
+const { Content } = await item.render();
 ---
 
-<Layout title={item.title}>
+<Layout title={item.data.title}>
   <main>
     <div class={styles.container}>
       <div class={styles.imageWrapper}>
         <a href="/" class={styles.backLink}>← Back</a>
         <img
-          src={`/images/${item.image}`}
-          alt={item.title}
+          src={`/images/${item.data.image}`}
+          alt={item.data.title}
           transition:name={`image-${item.id}`}
           loading="eager"
           class={styles.image}
@@ -30,17 +34,12 @@ if (!item) return Astro.redirect('/');
       </div>
       <div class={styles.contentWrapper}>
         <div class={styles.content} transition:name={`card-${item.id}`}>
-          <h1 transition:name={`title-${item.id}`}>{item.title}</h1>
+          <h1 transition:name={`title-${item.id}`}>{item.data.title}</h1>
           <p class="description" transition:name={`desc-${item.id}`}>
-            {item.description}
+            {item.data.description}
           </p>
           <div class="additional-content">
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </p>
-            <p>
-              Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-            </p>
+            <Content />
           </div>
         </div>
       </div>
@@ -55,8 +54,32 @@ if (!item) return Astro.redirect('/');
     margin-bottom: 1.5rem;
   }
 
-  .additional-content p {
+  .additional-content {
     color: #aaa;
+  }
+
+  .additional-content h1 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-color);
+  }
+
+  .additional-content h2 {
+    font-size: 1.5rem;
+    margin: 1.5rem 0 1rem;
+    color: var(--text-color);
+  }
+
+  .additional-content p {
     margin-bottom: 1rem;
+  }
+
+  .additional-content ul {
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
+  }
+
+  .additional-content li {
+    margin-bottom: 0.5rem;
   }
 </style> 
